@@ -4,7 +4,7 @@ import zlib
 from bs4 import BeautifulSoup
 import requests
 
-from config import USE_HTML_CACHE
+from config import USE_HTML_CACHE, CACHE_DIR
 
 def url_html_cache(path, use=True):
     """
@@ -12,7 +12,7 @@ def url_html_cache(path, use=True):
     """
     if not os.path.exists(path):
         os.mkdir(path)
-    def _url_soup_cache(func):
+    def inner(func):
         def wrapper(url: str):
             ad = hex(zlib.adler32(bytes(url, "utf-8")))
             filename = f"{path}/{ad}.html"
@@ -25,9 +25,9 @@ def url_html_cache(path, use=True):
 
             return html
         return wrapper
-    return _url_soup_cache
+    return inner
         
-@url_html_cache("./cache", USE_HTML_CACHE)
+@url_html_cache(CACHE_DIR, USE_HTML_CACHE)
 def get_html(url):
     return requests.get(url).text
 
