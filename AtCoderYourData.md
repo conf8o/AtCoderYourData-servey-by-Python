@@ -72,11 +72,8 @@ TODO
 ```json
 [
     {
-        "date": xxxx,
-        "contest": xxxx,
-        ...
+        "date": "xxxx",
+        "contest": "xxxx",
     },
-    {
-    ...    
 ]
 ```
